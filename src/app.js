@@ -39,6 +39,10 @@ app.get("/register",(req,res) =>{
     res.render("form");
 })
 
+app.get("/aboutus",(req,res) =>{
+        res.render("aboutus");
+    })
+
 app.get("/login",(req,res) =>{
     res.render("login");
 })
