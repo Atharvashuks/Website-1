@@ -3,8 +3,9 @@ const path = require('path');
 require("./db/conn");
 const hbs = require('hbs');
 
-const Register = require("./models/register");
+const Regi = require("./models/register");
 const { json } = require("express");
+const { captureRejectionSymbol } = require('stream');
 
 
 const app = express();
@@ -42,6 +43,10 @@ app.get("/login",(req,res) =>{
     res.render("login");
 })
 
+app.get("/secret",(req,res) =>{
+    res.render("secret");
+})
+
 //server creaate
 app.listen(port, () => {
     console.log(`This server is running on port :) ${port} `);
@@ -56,7 +61,7 @@ app.post("/register",async (req,res) => {
 
         if(password === Cpassword){
 
-            const RegI = new Register({
+            const RegI = new Regi({
                 name:req.body.name,
                 email: req.body.email,
                 number:req.body.number,
@@ -74,5 +79,30 @@ app.post("/register",async (req,res) => {
         }
     }catch(error){
         res.status(400).send(error);
+    }
+})
+
+//login validation
+
+app.post("/login" , async(req,res) => {
+    try{
+
+        const email = req.body.email;
+        const pass = req.body.pass;
+
+        const userEmail= await Regi.findOne({email: email});
+
+        if(userEmail.pass === pass){
+            res.status(201).render("secret");
+        }
+        else{
+            res.send("Invalid login Details.......");
+        }
+
+        // res.send(userEmail);
+        // console.log(userEmail);
+
+    }catch(error){
+        res.status(400).send("Invalid login Details.......");
     }
 })
