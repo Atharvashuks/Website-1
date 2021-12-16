@@ -34,7 +34,10 @@ app.get("/",(req,res) =>{
     res.render("index");
 })
 
-app.get("/register",(req,res) =>{
+app.get("/aboutus",(req,res) =>{
+    res.render("aboutus");
+})
+app.get("/form",(req,res) =>{
     res.render("form");
 })
 
@@ -42,7 +45,7 @@ app.get("/login",(req,res) =>{
     res.render("login");
 })
 
-//server creaate
+//server create
 app.listen(port, () => {
     console.log(`This server is running on port :) ${port} `);
 })
